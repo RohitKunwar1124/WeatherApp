@@ -540,7 +540,6 @@ button:active {
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
-/* Responsive Design */
 @media (max-width: 1024px) {
     body { padding: 15px; }
     #weather-container { padding: 25px; max-width: 450px; }
@@ -615,12 +614,11 @@ button:active {
     #daily-forecast { padding: 12px; }
 }
 
-/* Smooth transitions for all interactive elements */
+
 * {
     transition: all 0.3s ease;
 }
 
-/* Enhanced focus states for accessibility */
 button:focus,
 input:focus,
 .forecast-tab:focus {
@@ -628,7 +626,7 @@ input:focus,
     outline-offset: 2px;
 }
 
-/* Custom scrollbars */
+
 #hourly-forecast::-webkit-scrollbar, #weather-container::-webkit-scrollbar { height: 6px; width: 6px; }
 #daily-items::-webkit-scrollbar { height: 8px; }
 #hourly-forecast::-webkit-scrollbar-track, #weather-container::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.1); border-radius: 3px; }
