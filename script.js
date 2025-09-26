@@ -1,23 +1,23 @@
 
-let resolvedCityName = null; // set by reverse geocoding when using current location
+let resolvedCityName = null; 
 
 function getWeather() {
     const apiKey ='fdf740f40da36f20395eee9131393265'
     const city = document.getElementById('city').value;
 
     if (city) {
-        // If a city is provided, fetch weather by city name
+        
         const currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
         const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${apiKey}`;
         
         fetchData(currentWeatherUrl, forecastUrl);
     } else {
-        // If no city is provided, prompt the user to enter a city
+        
         alert('Please enter a city');
     }
 }
 
-// Add this new function to your JavaScript
+
 function fetchData(currentWeatherUrl, forecastUrl) {
     fetch(currentWeatherUrl)
         .then(response => response.json())
@@ -53,7 +53,6 @@ function displayWeather(data) {
     const hourlyForecastDiv = document.getElementById('hourly-forecast');
     const dailyItemsDiv = document.getElementById('daily-items');
 
-    // Clear previous content
     cityNameElement.textContent = '';
     descriptionElement.textContent = '';
     windElement.textContent = '';
@@ -67,7 +66,7 @@ function displayWeather(data) {
         hideForecastSections();
     } else {
         const cityName = resolvedCityName || data.name;
-        const temperature = Math.round(data.main.temp); // Already metric when units=metric
+        const temperature = Math.round(data.main.temp); 
         const description = data.weather[0].description;
         const windSpeed = data.wind.speed;
         const humidity = data.main.humidity;
@@ -88,7 +87,6 @@ function displayWeather(data) {
         weatherIcon.alt = description;
 
         showImage();
-        // Reset after use so manual city searches are not affected
         resolvedCityName = null;
     }
 }
@@ -96,12 +94,12 @@ function displayWeather(data) {
 function displayHourlyForecast(hourlyData) {
     const hourlyForecastDiv = document.getElementById('hourly-forecast');
 
-    const next24Hours = hourlyData.slice(0, 8); // Display the next 24 hours (3-hour intervals)
+    const next24Hours = hourlyData.slice(0, 8); 
 
     next24Hours.forEach(item => {
-        const dateTime = new Date(item.dt * 1000); // Convert timestamp to milliseconds
+        const dateTime = new Date(item.dt * 1000); 
         const hour = dateTime.getHours();
-        const temperature = Math.round(item.main.temp); // Already metric when units=metric
+        const temperature = Math.round(item.main.temp); 
         const iconCode = item.weather[0].icon;
         const iconUrl = `https://openweathermap.org/img/wn/${iconCode}.png`;
 
@@ -121,7 +119,7 @@ function displayDailyForecast(forecastData) {
     const dailyItemsDiv = document.getElementById('daily-items');
     dailyItemsDiv.innerHTML = '';
 
-    // Group forecast data by day
+    
     const dailyData = {};
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -144,18 +142,18 @@ function displayDailyForecast(forecastData) {
         dailyData[dayKey].icons.push(item.weather[0].icon);
     });
 
-    // Get the next 7 days
+    
     const next7Days = Object.values(dailyData).slice(0, 7);
 
     next7Days.forEach((dayData, index) => {
         const date = dayData.date;
         const isToday = date.toDateString() === today.toDateString();
         
-        // Calculate min/max temperatures
+        
         const minTemp = Math.round(Math.min(...dayData.temps));
         const maxTemp = Math.round(Math.max(...dayData.temps));
         
-        // Get the most common weather condition for the day
+        
         const weatherCounts = {};
         dayData.weather.forEach(weather => {
             weatherCounts[weather] = (weatherCounts[weather] || 0) + 1;
@@ -164,7 +162,7 @@ function displayDailyForecast(forecastData) {
             weatherCounts[a] > weatherCounts[b] ? a : b
         );
         
-        // Get the most common icon for the day
+        
         const iconCounts = {};
         dayData.icons.forEach(icon => {
             iconCounts[icon] = (iconCounts[icon] || 0) + 1;
@@ -175,7 +173,7 @@ function displayDailyForecast(forecastData) {
         
         const iconUrl = `https://openweathermap.org/img/wn/${mostCommonIcon}@2x.png`;
         
-        // Format date
+        
         const dayName = date.toLocaleDateString('en-US', { weekday: 'short' });
         const monthDay = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
         
