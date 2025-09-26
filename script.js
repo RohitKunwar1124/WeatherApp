@@ -266,26 +266,26 @@ function getWeatherByCoordinates(latitude, longitude, apiKey) {
     fetchData(currentWeatherUrl, forecastUrl);
 }
 
-// Reverse geocode helper with improved city detection
+
 function resolveCityName(lat, lon, apiKey) {
     console.log(`Resolving location for coordinates: ${lat}, ${lon}`);
     
-    // Use Nominatim with higher zoom for better accuracy
+    
     return fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=18&addressdetails=1`)
         .then(r => r.json())
         .then(nominatimData => {
             if (nominatimData && nominatimData.address) {
                 const addr = nominatimData.address;
-                // Try different city name fields in order of preference
+                
                 const city = addr.city || addr.town || addr.village || addr.county || addr.district || addr.municipality;
                 const state = addr.state;
                 const country = addr.country;
                 
-                // Prioritize larger cities over smaller ones
+                
                 let finalCity = city;
                 if (city && city.toLowerCase().includes('kashipur') && state && state.toLowerCase().includes('uttarakhand')) {
-                    // If we get Kashipur but we're in Uttarakhand, try to get a better city name
-                    finalCity = 'Dehradun'; // Default to Dehradun for Uttarakhand
+                    
+                    finalCity = 'Dehradun'; 
                 }
                 
                 const nameParts = [finalCity, state].filter(Boolean);
@@ -295,7 +295,7 @@ function resolveCityName(lat, lon, apiKey) {
                 if (resolvedCityName) return;
             }
             
-            // Fallback to OpenWeather
+            
             const owUrl = `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=${apiKey}`;
             return fetch(owUrl)
                 .then(r => r.json())
@@ -304,7 +304,7 @@ function resolveCityName(lat, lon, apiKey) {
                         const g = data[0];
                         let cityName = g.name;
                         
-                        // Fix common location issues
+                        
                         if (cityName && cityName.toLowerCase().includes('kashipur') && g.state && g.state.toLowerCase().includes('uttarakhand')) {
                             cityName = 'Dehradun';
                         }
@@ -323,40 +323,40 @@ function resolveCityName(lat, lon, apiKey) {
         });
 }
 
-// Show forecast sections after weather data is loaded
+
 function showForecastSections() {
     const forecastTabs = document.getElementById('forecast-tabs');
     const hourlyForecast = document.getElementById('hourly-forecast');
     
-    // Show forecast tabs and hourly forecast by default
+    
     forecastTabs.style.display = 'flex';
     hourlyForecast.style.display = 'grid';
 }
 
-// Hide forecast sections when there's an error or no data
+
 function hideForecastSections() {
     const forecastTabs = document.getElementById('forecast-tabs');
     const hourlyForecast = document.getElementById('hourly-forecast');
     const dailyForecast = document.getElementById('daily-forecast');
     
-    // Hide all forecast sections
+    
     forecastTabs.style.display = 'none';
     hourlyForecast.style.display = 'none';
     dailyForecast.style.display = 'none';
 }
 
-// Toggle functions for forecast views
+
 function showHourlyForecast() {
     const hourlyTab = document.getElementById('hourly-tab');
     const dailyTab = document.getElementById('daily-tab');
     const hourlyForecast = document.getElementById('hourly-forecast');
     const dailyForecast = document.getElementById('daily-forecast');
     
-    // Update tab states
+    
     hourlyTab.classList.add('active');
     dailyTab.classList.remove('active');
     
-    // Show/hide forecast sections
+    
     hourlyForecast.style.display = 'grid';
     dailyForecast.style.display = 'none';
 }
@@ -367,11 +367,9 @@ function showDailyForecast() {
     const hourlyForecast = document.getElementById('hourly-forecast');
     const dailyForecast = document.getElementById('daily-forecast');
     
-    // Update tab states
     dailyTab.classList.add('active');
     hourlyTab.classList.remove('active');
     
-    // Show/hide forecast sections
     hourlyForecast.style.display = 'none';
     dailyForecast.style.display = 'block';
 }
