@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body class="red">
+    <div id="weather-container">
+        <h2>Weather App</h2>
+        <div class="button-container">
+            <input type="text" id="city" placeholder="Enter city/zip">
+            <button onclick="getWeather()">Search</button>
+        </div>
+        <button class="location-button" onclick="getCurrentLocationWeather()">Current Location</button>
+
+        <img id="weather-icon" alt="Weather Icon">
+
+        <div id="temp-div"></div>
+
+        <div id="weather-info">
+            <p id="city-name"></p>
+            <p id="description"></p>
+            <p id="wind"></p>
+            <p id="humidity"></p>
+        </div>
+
+        <div id="forecast-tabs" style="display: none;">
+            <button id="hourly-tab" class="forecast-tab active" onclick="showHourlyForecast()">24 Hours</button>
+            <button id="daily-tab" class="forecast-tab" onclick="showDailyForecast()">7 Days</button>
+        </div>
+        
+        <div id="hourly-forecast" style="display: none;"></div>
+        <div id="daily-forecast" style="display: none;">
+            <h3 id="daily-heading">7-Day Forecast</h3>
+            <div id="daily-items"></div>
+        </div>
+    </div>
+    <script src="./script.js"></script> 
+</body>
+</html>
