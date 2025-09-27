@@ -2,7 +2,7 @@
 let resolvedCityName = null; 
 
 function getWeather() {
-    const apiKey ='fdf740f40da36f20395eee9131393265'
+    const apiKey =''
     const city = document.getElementById('city').value;
 
     if (city) {
